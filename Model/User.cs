@@ -21,8 +21,7 @@ namespace BookWebApp.Model
         }
 
         [Key]
-        [Required]
-        [StringLength(16)]
+        [StringLength(36)]
         public string UserAccountID { get; set; }
 
         [Required]

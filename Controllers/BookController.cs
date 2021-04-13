@@ -39,15 +39,17 @@ namespace BookWebApp.Controllers
             return Ok();
         }
 
-        [HttpPost("Update")]
-        public ActionResult updateBook(Book book)
+        [HttpPost("updateBook")]
+        public ActionResult updateBook([FromForm] Book book)
         {
+            Console.WriteLine("TEST");
+            Console.WriteLine(book);
             bookRep.updateBook(book);
             return Ok(book);
         }
 
-        [HttpPost("Delete")]
-        public ActionResult deleteBook(Book book)
+        [HttpPost("deleteBook")]
+        public ActionResult deleteBook([FromForm] BookUpdateModel book)
         {
             bookRep.deleteBook(book);
             return Ok(book);

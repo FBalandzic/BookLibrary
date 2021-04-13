@@ -14,13 +14,6 @@ namespace BookWebApp.Controllers
     {
         UserRep userRep = new UserRep();
 
-        [HttpGet]
-        public ActionResult<IEnumerable<UserRep>> getAllUsers()
-        {
-            var books = userRep.getAllUsers();
-            return Ok(books);
-        }
-
         [HttpGet("{id}")]
         public ActionResult getUserById(string id)
         {
@@ -28,24 +21,12 @@ namespace BookWebApp.Controllers
             return Ok(user);
         }
 
-        [HttpPost("add")]
-        public ActionResult addUser()
+        [HttpPost("addUser")]
+        public ActionResult addUser([FromForm] User user)
         {
-            User user = new User();
-            user.UserAccountID = "dd";
-            user.Username = "Filip";
-            user.Password = "Filip";
-            user.IsDeleted = 0;
             userRep.addUser(user);
             return Ok();
         }
 
-
-        [HttpPost("Delete")]
-        public ActionResult deleteUser(User user)
-        {
-            userRep.deleteUser(user);
-            return Ok(user);
-        }
     }
 }

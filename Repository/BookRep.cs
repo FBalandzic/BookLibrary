@@ -101,12 +101,11 @@ namespace BookWebApp.Repository
             return books;
         }
 
-        public int deleteBook(Book book)
+        public int deleteBook(BookUpdateModel book)
         {
             conn.Open();
-            string query = "Update Book set isDeleted = 0 where BookID = @id";
-            var command = conn.CreateCommand();
-            command.CommandText = query;
+            string query = "Update Book set isDeleted = 1 where BookID = @id";
+            var command = new SqliteCommand(query, conn);
             command.Parameters.AddWithValue("@id", book.BookID);
             try
             {
@@ -126,30 +125,31 @@ namespace BookWebApp.Repository
 
         public int updateBook(Book book)
         {
+            string query = "UPDATE Book SET Title = @title , Author = @author , Genre = @genre WHERE ISBN=@isbn";
             conn.Open();
-            string query = "Update Book SET BookID = @id AND ISBN = @isbn AND Title = @title AND Author = @author AND Genre = @genre AND isDeleted = @isdel";
-            //BookID,ISBN,Title,Author,Genre,isDeleted
-            var command = conn.CreateCommand();
-            command.CommandText = query;
-            command.Parameters.AddWithValue("@id", book.BookID);
-            command.Parameters.AddWithValue("@isbn", book.ISBN);
-            command.Parameters.AddWithValue("@title", book.Title);
-            command.Parameters.AddWithValue("@author", book.Author);
-            command.Parameters.AddWithValue("@genre", book.Genre);
-            command.Parameters.AddWithValue("@isdel", book.IsDeleted);
-            try
+            //BookID,ISBN,Title,Author,Genre
+            using (var command = new SqliteCommand(query, conn))
             {
-                command.ExecuteNonQuery();
-                return 1;
-            }
-            catch (SqliteException e)
-            {
-                Console.WriteLine(e.Message.ToString(), "Error message");
-                return 0;
-            }
-            finally
-            {
-                conn.Close();
+                command.Parameters.AddWithValue("@title", book.Title);
+                command.Parameters.AddWithValue("@author", book.Author);
+                command.Parameters.AddWithValue("@genre", book.Genre);
+                command.Parameters.AddWithValue("@isbn", book.ISBN);
+                try
+                {
+                    command.ExecuteNonQuery();
+                    Console.WriteLine(command.CommandText);
+                    return 1;
+                }
+                catch (SqliteException e)
+                {
+                    Console.WriteLine(e.Message.ToString(), "Error message");
+                    return 0;
+                }
+                finally
+                {
+                    conn.Close();
+                }
+
             }
         }
     }

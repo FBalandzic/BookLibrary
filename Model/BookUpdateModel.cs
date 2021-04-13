@@ -6,13 +6,14 @@ using System.Threading.Tasks;
 
 namespace BookWebApp.Model
 {
-    public class Book
+    public class BookUpdateModel
     {
-        public Book()
+
+        public BookUpdateModel()
         {
         }
 
-        public Book(string v1, string v2, string v3, string v4, string v5, int v6)
+        public BookUpdateModel(string v1, string v2, string v3, string v4, string v5, int v6)
         {
             this.BookID = v1;
             this.ISBN = v2;
@@ -22,21 +23,19 @@ namespace BookWebApp.Model
             this.IsDeleted = v6;
         }
 
+        [Required]
         [Key]
         [StringLength(36)]
         public string BookID { get; set; }
 
-        [Required]
+       
         [StringLength(13)]
         public String ISBN { get; set; }
 
-        [Required]  
         public String Title { get; set; }
 
-        [Required]
         public String Author { get; set; }
 
-        [Required]
         public String Genre { get; set; }
 
         public int IsDeleted { get; set; }

@@ -15,9 +15,7 @@ namespace BookWebApp.Repository
         public int addUser(User user)
         {
             Guid guid = Guid.NewGuid();
-            string userId = guid.ToString();
-
-            user.UserAccountID = userId;
+            user.UserAccountID = guid.ToString();
             user.IsDeleted = 0;
 
             string query = "INSERT INTO UserAccount (UserAccountID,Username,Password,IsDeleted) VALUES (@id,@user,@password,@isDeleted)";
@@ -73,50 +71,7 @@ namespace BookWebApp.Repository
             return user;
         }
 
-        public List<User> getAllUsers()
-        {
-            List<User> users = new List<User>();
-            string query = "SELECT * FROM UserAccount";
-            var command = new SqliteCommand(query, conn);
 
-            conn.Open();
-            using (var reader = command.ExecuteReader())
-            {
-                while (reader.Read())
-                {
-                    users.Add(new User(reader["UserAccountID"].ToString(),
-                                        reader["Username"].ToString(),
-                                        reader["Password"].ToString(),
-                                        int.Parse(reader["IsDeleted"].ToString())
-                                        ));
-                }
-            }
-            conn.Close();
-            return users;
-        }
-
-        public int deleteUser(User user)
-        {
-            conn.Open();
-            string query = "Update UserAccount set IsDeleted = 0 where UserAccountID = @id";
-            var command = conn.CreateCommand();
-            command.CommandText = query;
-            command.Parameters.AddWithValue("@id", user.UserAccountID);
-            try
-            {
-                command.ExecuteNonQuery();
-                return 1;
-            }
-            catch (SqliteException e)
-            {
-                Console.WriteLine(e.Message.ToString(), "Error message");
-                return 0;
-            }
-            finally
-            {
-                conn.Close();
-            }
-        }
 
     }
 }
