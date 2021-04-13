@@ -13,17 +13,10 @@ namespace BookWebApp.Repository
         SqliteConnection conn = Db.Instance;
 
         //Vrati nazad addBook(Book book)
-        public int addBook() 
+        public int addBook(Book book) 
         {
-            Book book = new Book();
             Guid guid = Guid.NewGuid();
-            string bookId = guid.ToString();
-
-            book.BookID = bookId;
-            book.ISBN = "9781234567897";
-            book.Title = "The Lord of the Rings";
-            book.Author = "J. R. R. Tolkien";
-            book.Genre = "Fantasy";
+            book.BookID = guid.ToString();
             book.IsDeleted = 0;
 
             string query = "INSERT INTO Book (BookID,ISBN,Title,Author,Genre,isDeleted) VALUES (@id,@isbn,@title,@author,@genre,@isDeleted)";
@@ -37,10 +30,11 @@ namespace BookWebApp.Repository
                 cmd.Parameters.AddWithValue("@title", book.Title);
                 cmd.Parameters.AddWithValue("@author", book.Author);
                 cmd.Parameters.AddWithValue("@genre", book.Genre);
-                cmd.Parameters.AddWithValue("@isDeleted", 0);
+                cmd.Parameters.AddWithValue("@isDeleted", book.IsDeleted);
                 try
                 {
                     cmd.ExecuteNonQuery();
+                    Console.WriteLine("test");
                     return 1;
                 }
                 catch (SqliteException e)

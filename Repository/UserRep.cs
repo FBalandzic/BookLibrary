@@ -18,6 +18,7 @@ namespace BookWebApp.Repository
             string userId = guid.ToString();
 
             user.UserAccountID = userId;
+            user.IsDeleted = 0;
 
             string query = "INSERT INTO UserAccount (UserAccountID,Username,Password,IsDeleted) VALUES (@id,@user,@password,@isDeleted)";
 

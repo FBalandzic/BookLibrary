@@ -31,7 +31,7 @@ namespace BookWebApp.Model
         [StringLength(13)]
         public String ISBN { get; set; }
 
-        [Required]
+        [Required]  
         public String Title { get; set; }
 
         [Required]

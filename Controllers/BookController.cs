@@ -30,10 +30,12 @@ namespace BookWebApp.Controllers
             return Ok(book);
         }
 
-        [HttpPost("add")]
-        public ActionResult addBook()
+        [HttpPost]
+        public ActionResult addBook([FromForm] Book book)
         {
-            bookRep.addBook();
+            Console.WriteLine("TEST");
+            Console.WriteLine(book);
+            bookRep.addBook(book);
             return Ok();
         }
 
