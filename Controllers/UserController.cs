@@ -28,5 +28,20 @@ namespace BookWebApp.Controllers
             return Ok();
         }
 
+        [HttpGet("login")]
+        public ActionResult login([FromForm]User user)
+        {
+            if(userRep.login(user) == null)
+            {
+                Console.WriteLine("Failed to login");
+                return Ok();
+            }
+            else
+            {
+                Console.WriteLine("Successful login");
+                return Ok();
+            }
+        }
+
     }
 }

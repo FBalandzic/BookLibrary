@@ -71,7 +71,39 @@ namespace BookWebApp.Repository
             return user;
         }
 
-
-
+        public User login(User user)
+        {
+            if (user == null)
+            {
+                return null;
+            }
+            string query = "SELECT UserAccountID FROM UserAccount WHERE Username=@username AND Password = @password";
+            conn.Open();
+            using (SqliteCommand cmd = new SqliteCommand(query, conn))
+            {
+                cmd.Parameters.AddWithValue("@username", user.Username);
+                cmd.Parameters.AddWithValue("@password", user.Password);
+                try
+                {
+                    Console.WriteLine(cmd.CommandText);
+                    string userid = (string)cmd.ExecuteScalar();
+                    if(userid != null)
+                    {
+                        Console.WriteLine(userid);
+                        return getUserById(userid);
+                    }
+                    return null;
+                }
+                catch (SqliteException e)
+                {
+                    Console.WriteLine(e.Message.ToString(), "Error messagexD");
+                    return null;
+                }
+                finally
+                {
+                    conn.Close();
+                }
+            } 
+        }
     }
 }
