@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using BookWebApp.Repository;
 using BookWebApp.Model;
+using Microsoft.AspNetCore.Cors;
 
 namespace BookWebApp.Controllers
 {
@@ -31,7 +32,7 @@ namespace BookWebApp.Controllers
         }
 
         [HttpPost]
-        public ActionResult addBook([FromForm] Book book)
+        public ActionResult addBook([FromBody] Book book)
         {
             Console.WriteLine("TEST");
             Console.WriteLine(book);
@@ -40,7 +41,7 @@ namespace BookWebApp.Controllers
         }
 
         [HttpPost("updateBook")]
-        public ActionResult updateBook([FromForm] Book book)
+        public ActionResult updateBook([FromBody] Book book)
         {
             Console.WriteLine("TEST");
             Console.WriteLine(book);
@@ -49,7 +50,7 @@ namespace BookWebApp.Controllers
         }
 
         [HttpPost("deleteBook")]
-        public ActionResult deleteBook([FromForm] BookUpdateModel book)
+        public ActionResult deleteBook([FromBody] BookUpdateModel book)
         {
             bookRep.deleteBook(book);
             return Ok(book);

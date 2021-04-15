@@ -13,14 +13,14 @@ namespace BookWebApp.Model
         {
         }
 
-        public BookUpdateModel(string v1, string v2, string v3, string v4, string v5, int v6)
+        public BookUpdateModel(string bookID, string isbn, string title, string author, string genre, int isDeleted)
         {
-            this.BookID = v1;
-            this.ISBN = v2;
-            this.Title = v3;
-            this.Author = v4;
-            this.Genre = v5;
-            this.IsDeleted = v6;
+            this.BookID = bookID;
+            this.ISBN = isbn;
+            this.Title = title;
+            this.Author = author;
+            this.Genre = genre;
+            this.IsDeleted = isDeleted;
         }
 
         [Required]

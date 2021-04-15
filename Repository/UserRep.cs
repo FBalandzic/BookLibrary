@@ -18,6 +18,20 @@ namespace BookWebApp.Repository
             user.UserAccountID = guid.ToString();
             user.IsDeleted = 0;
 
+            string checkQuery = "SELECT * FROM UserAccount WHERE Username = @username";
+
+            conn.Open();
+            using(SqliteCommand cmd = new SqliteCommand(checkQuery, conn))
+            {
+                cmd.Parameters.AddWithValue("@username", user.Username);
+                if(cmd.ExecuteScalar() != null)
+                {
+                    Console.WriteLine("NE MOZES NAPRAVITI POSTIJ USER");
+                    return 0;
+                }
+            }
+            conn.Close();
+
             string query = "INSERT INTO UserAccount (UserAccountID,Username,Password,IsDeleted) VALUES (@id,@user,@password,@isDeleted)";
 
             conn.Open();
@@ -30,6 +44,7 @@ namespace BookWebApp.Repository
                 cmd.Parameters.AddWithValue("@isDeleted", user.IsDeleted);
                 try
                 {
+                    
                     cmd.ExecuteNonQuery();
                     return 1;
                 }

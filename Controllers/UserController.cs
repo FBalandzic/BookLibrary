@@ -22,16 +22,17 @@ namespace BookWebApp.Controllers
         }
 
         [HttpPost("addUser")]
-        public ActionResult addUser([FromForm] User user)
+        public ActionResult addUser([FromBody] User user)
         {
             userRep.addUser(user);
             return Ok();
         }
 
-        [HttpGet("login")]
-        public ActionResult login([FromForm]User user)
+        [HttpPost("login")]
+        public ActionResult login([FromBody]User user)
         {
-            if(userRep.login(user) == null)
+            var userFromDb = userRep.login(user);
+            if(userFromDb == null)
             {
                 Console.WriteLine("Failed to login");
                 return Ok();
@@ -39,7 +40,7 @@ namespace BookWebApp.Controllers
             else
             {
                 Console.WriteLine("Successful login");
-                return Ok();
+                return Ok(userFromDb);
             }
         }
 

@@ -88,13 +88,17 @@ namespace BookWebApp.Repository
             {
                 while (reader.Read())
                 {
-                    books.Add(new Book(reader["BookID"].ToString(),
+                    if (int.Parse(reader["isDeleted"].ToString()) == 0) 
+                    {
+                        books.Add(new Book(reader["BookID"].ToString(),
                                         reader["ISBN"].ToString(),
                                         reader["Title"].ToString(),
                                         reader["Author"].ToString(),
                                         reader["Genre"].ToString(),
                                         int.Parse(reader["isDeleted"].ToString())
                                         ));
+                    }
+                   
                 }
             }
             conn.Close();

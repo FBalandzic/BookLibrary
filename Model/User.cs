@@ -12,12 +12,12 @@ namespace BookWebApp.Model
         {
         }
 
-        public User(string v1, string v2, string v3, int v4)
+        public User(string userAccountID, string username, string password, int isDeleted)
         {
-            this.UserAccountID = v1;
-            this.Username = v2;
-            this.Password = v3;
-            this.IsDeleted = v4;
+            this.UserAccountID = userAccountID;
+            this.Username = username;
+            this.Password = password;
+            this.IsDeleted = isDeleted;
         }
 
         [Key]
